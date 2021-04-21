@@ -39,10 +39,23 @@ const server =http.createServer((req,res)=> {
        // let secondquery=url1query[1].split("=")
         //let queryData=url1.parse(req.url,true).query;
         let obQuery=querystring.parse(url1[1]);
-
+        
+        if(obQuery.submit1=="Save"){
+            console.log("ss")
+            fs.writeFile('./savefile',obQuery.name,(err) =>{
+                                if (err) console.log("error");
+                                else console.log("writed successfully");
+            })
+        }
+        else{
+            fs.appendFile('./savefile',obQuery.name,(err) => {
+                                if (err) console.log("error")
+                                else console.log('append successfully');
+            })
+        }
         res.setHeader('Content-Type','text/html');
-        //res.write(url1[0]+"<br>");
-        //res.write(url1[1]+"<br>");
+        res.write(url1[0]+"<br>");
+        res.write(url1[1]+"<br>");
         res.write(obQuery.submit1+"<br>")
         res.write(obQuery.name+"<br>")
         res.end("submit OK");
